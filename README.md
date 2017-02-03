@@ -1,4 +1,4 @@
-# ServerHealthCheck::Rails::Osm
+# ServerHealthCheckRailsOsm
 Short description and motivation.
 
 ## Usage

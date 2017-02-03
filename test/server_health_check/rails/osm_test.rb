@@ -1,7 +1,7 @@
 require 'test_helper'
 
-class ServerHealthCheck::Rails::Osm::Test < ActiveSupport::TestCase
+class ServerHealthCheckRailsOsm::Test < ActiveSupport::TestCase
   test "truth" do
-    assert_kind_of Module, ServerHealthCheck::Rails::Osm
+    assert_kind_of Module, ServerHealthCheckRailsOsm
   end
 end
