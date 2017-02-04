@@ -46,9 +46,7 @@ module ServerHealthCheckRailsOsm
       super
     end
 
-    # rubocop:disable Lint/Void
-    ActionController::Base # Autoload so that LogSubscriber is defined
-    # rubocop:enable Lint/Void
+    ActionController::Base.tap { } # Autoload so that LogSubscriber is defined
     ActionController::LogSubscriber.prepend self
   end
 
