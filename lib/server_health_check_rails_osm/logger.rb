@@ -32,7 +32,7 @@ module ServerHealthCheckRailsOsm
       end
 
       def choose_logger(object:, env:)
-        logger_klass = Engine.routes.url_helpers.health_index_path == env.fetch("REQUEST_PATH") { env.fetch("REQUEST_URI") } ? to_s : :Rails
+        logger_klass = ServerHealthCheckRails::Engine.routes.url_helpers.health_index_path == env.fetch("REQUEST_PATH") { env.fetch("REQUEST_URI") } ? to_s : :Rails
         (class << object; self; end).class_eval do
           delegate :logger, to: logger_klass
         end
@@ -42,7 +42,7 @@ module ServerHealthCheckRailsOsm
 
   Module.new do
     def start_processing(event)
-      ServerHealthCheckRails::Logger.choose_logger(object: self, env: event.payload[:headers].env)
+      ServerHealthCheckRailsOsm::Logger.choose_logger(object: self, env: event.payload[:headers].env)
       super
     end
 
@@ -52,7 +52,7 @@ module ServerHealthCheckRailsOsm
 
   Module.new do
     def call(env)
-      ServerHealthCheckRails::Logger.choose_logger(object: self, env: env)
+      ServerHealthCheckRailsOsm::Logger.choose_logger(object: self, env: env)
       super
     end
 
