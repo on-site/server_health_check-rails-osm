@@ -32,7 +32,7 @@ module ServerHealthCheckRailsOsm
       end
 
       def choose_logger(object:, env:)
-        logger_klass = Engine.routes.url_helpers.health_index_path == env["REQUEST_PATH"] ? to_s : :Rails
+        logger_klass = Engine.routes.url_helpers.health_index_path == env.fetch("REQUEST_PATH") { env.fetch("REQUEST_URI") } ? to_s : :Rails
         (class << object; self; end).class_eval do
           delegate :logger, to: logger_klass
         end
