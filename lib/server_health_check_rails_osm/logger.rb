@@ -41,22 +41,17 @@ module ServerHealthCheckRailsOsm
     end
   end
 
-  Module.new do
+  module LogSubscriber
     def start_processing(event)
       ServerHealthCheckRailsOsm::Logger.choose_logger(object: self, env: event.payload[:headers].env)
       super
     end
-
-    ActionController::Base.tap { } # Autoload so that LogSubscriber is defined
-    ActionController::LogSubscriber.prepend self
   end
 
-  Module.new do
+  module RackLogger
     def call(env)
       ServerHealthCheckRailsOsm::Logger.choose_logger(object: self, env: env)
       super
     end
-
-    Rails::Rack::Logger.prepend self
   end
 end
