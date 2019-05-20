@@ -4,7 +4,7 @@ module ServerHealthCheckRailsOsm
   class Engine < ::Rails::Engine
     isolate_namespace ServerHealthCheckRailsOsm
 
-    initializer "server_health_check_rails_osm.apply_patches" do |app|
+    config.after_initialize do
       ServerHealthCheckRailsOsm::Patches.apply_patches
     end
 
