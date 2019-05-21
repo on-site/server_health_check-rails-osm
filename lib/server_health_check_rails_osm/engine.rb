@@ -30,5 +30,16 @@ module ServerHealthCheckRailsOsm
           (original_exclude && original_exclude.call(request))
       }
     end
+
+    initializer "server_health_check_rails_osm.force_db_connection_before_health_check" do |app|
+      # Without forcing the connection here, calls to health_check.active_record! will return false.
+      app.config.to_prepare do
+        ServerHealthCheckRails::HealthController.before_action do
+          ActiveRecord::Base.connection
+        rescue => e
+          app.config.logger.warn { "Unable to establish a database connection (#{e.class}: #{e})" }
+        end
+      end
+    end
   end
 end
