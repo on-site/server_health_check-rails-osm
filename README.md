@@ -1,5 +1,11 @@
 # ServerHealthCheckRailsOsm
-Short description and motivation.
+
+This gem serves 2 roles:
+
+1. Make the server health check URL available via HTTP even when at the application level, config.ssl_only is true.
+2. Make the server health check URL use a different log file than the rest of the application.
+   If the server health check URL is being pinged by monitoring tools every few seconds, it creates a log of noise
+   in the logs.  Instead of logging to production.log like all other requests, it instead logs to health_check.log.
 
 ## Usage
 How to use my plugin.
